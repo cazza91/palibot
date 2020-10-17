@@ -4,8 +4,6 @@ module.exports = {
     description: 'I mostly provide help on how to use the bot',
     aliases: ['palibot'],
     execute(message, args) {
-
-
       const msg = message.content.toLowerCase();
 
       if (msg.includes('help')){
@@ -34,32 +32,33 @@ module.exports = {
           try {console.log(`${message.guild.name}` + ` (${message.guild.memberCount} users) ${message.author.username} has pet me.`)} catch(e) {
           console.log(`${message.author.username} has pet me. (dm)`);
       }
-    }
-    if (msg.includes('emojis')){
-      message.delete();
-      var emo = msg.indexOf('emojis')+7;
-      var final_msg = ``;
-      var nbr =1;
+      }
+      if (msg.includes('emojis')){
+        message.delete();
+        var emo = msg.indexOf('emojis')+7;
+        var final_msg = ``;
+        var nbr =1;
 
-      try {nbr = Number(msg.substring(emo,msg.length)) } catch (e) {
-      console.log("error")}
-      console.log(nbr)
-      for (var i=0; i < nbr; i++){
+        try {nbr = Number(msg.substring(emo,msg.length)) } catch (e) {
+          console.log("error", e)
+        }
+        console.log(nbr)
+        for (var i=0; i < nbr; i++){
+          var emoj = client.emojis.random();
+          if (!emoj.animated){
+            emoj = client.emojis.random();
+          }
+          final_msg += `${emoj}`;
+        }
+        message.channel.send(final_msg)
+      }
+      else if (msg.includes('emoji')){
+        message.delete();
         var emoj = client.emojis.random();
-        while (!emoj.animated){
+        if (!emoj.animated){
           emoj = client.emojis.random();
         }
-        final_msg += `${emoj}`;
+        message.channel.send(`${emoj}`)
       }
-      message.channel.send(final_msg)
     }
-    else if (msg.includes('emoji')){
-      message.delete();
-      var emoj = client.emojis.random();
-      while (!emoj.animated){
-        emoj = client.emojis.random();
-      }
-      message.channel.send(`${emoj}`)
-    }
-  }
 }
